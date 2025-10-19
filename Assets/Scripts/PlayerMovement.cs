@@ -4,42 +4,79 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Rigidbody rb;
-    [SerializeField] private float speed = 5;
-    [SerializeField] private float turnSpeed = 360;
-    private Vector3 input;
+    public float moveSpeed = 5f;
+    public float gravity = -9.81f;
 
+    public Transform cameraTransform;
 
+    private CharacterController controller;
+    private float yVelocity;
 
+    void Start()
+    {
+        controller = GetComponent<CharacterController>();
+
+        if (cameraTransform == null)
+            cameraTransform = GetComponent<Camera>().transform;
+    }
     void Update()
     {
-        GatherInput();
-        Look();
+        // Lee el input WASD
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+        Vector3 inputDir = new Vector3(h, 0f, v).normalized;
+
+        MouseLook();
+
+        //Determinando la posicion de la camara
+        Vector3 camForward = cameraTransform.forward;
+        Vector3 camRight = cameraTransform.right;
+
+        camForward.y = 0f;
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        Vector3 moveDir = (camForward * inputDir.z + camRight * inputDir.x).normalized;
+
+        /* 3. No creo que haga falta la gravedad pero ya que esta voy a dejarla por si acaso
+        if (controller.isGrounded)
+        {
+            yVelocity = -1f; // small downward push
+        }
+        else
+        {
+            yVelocity += gravity * Time.deltaTime;
+        }
+        */
+        // Moviemento
+        Vector3 velocity = moveDir * moveSpeed + Vector3.up * yVelocity;
+        controller.Move(velocity * Time.deltaTime);
     }    
     private void FixedUpdate()
     {
-        Move();
+
     }
-    void GatherInput()
+
+    // Esta funcion controla mirar con la camara
+    void MouseLook()
     {
-        input = new Vector3 (Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-    }
-    void Look()
-    {
-        if (input != Vector3.zero)
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+
+        if (groundPlane.Raycast(ray, out float distance))
         {
+            Vector3 point = ray.GetPoint(distance);
+            Vector3 lookDir = point - transform.position;
+            lookDir.y = 0f;
 
-            var relative = (transform.position + input.ToIso()) - transform.position;
-            var rot = Quaternion.LookRotation(relative, Vector3.up);
-
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, turnSpeed * Time.deltaTime);
+            if (lookDir.sqrMagnitude > 0.01f)
+                transform.rotation = Quaternion.LookRotation(lookDir);
         }
     }
 
-    void Move()
+    void Dashing()
     {
-        rb.MovePosition(transform.position + (transform.forward * input.magnitude) * speed * Time.deltaTime);
-    }
-    
 
+    }
 }

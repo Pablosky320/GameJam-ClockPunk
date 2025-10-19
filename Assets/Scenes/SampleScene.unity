@@ -264,7 +264,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fa277fa23a685c4fb53fe3540e95afe, type: 3}
   m_Name: 
@@ -473,6 +473,7 @@ MonoBehaviour:
   rb: {fileID: 578267501}
   speed: 5
   turnSpeed: 360
+  cam: {fileID: 330585545}
 --- !u!1 &801371286
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,7 +662,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1406632996}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9efd507fc40f4864b927c55603c8cf3f, type: 3}
   m_Name: 

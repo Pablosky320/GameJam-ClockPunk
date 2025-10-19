@@ -2,12 +2,11 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    public Transform target;
+    public Vector3 offset;
 
-    public GameObject player;
-
-    // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        transform.position = new Vector3(player.transform.position.x - 7, player.transform.position.y + 6.5f, player.transform.position.z - 7);
+        transform.position = target.position + offset;
     }
 }
