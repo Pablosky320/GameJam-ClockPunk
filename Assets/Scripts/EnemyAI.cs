@@ -18,7 +18,7 @@ public class EnemyAI : MonoBehaviour
 
         if (isAlerted == true)
         {
-            Move();
+            Alerted();
         }
     }
 
@@ -27,7 +27,7 @@ public class EnemyAI : MonoBehaviour
         isAlerted = true;
     }
 
-    void Move()
+    void Alerted()
     {
         rb.MovePosition(transform.position + (transform.forward * playerDirection.magnitude) * speed * Time.deltaTime);
     }
