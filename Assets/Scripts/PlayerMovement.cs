@@ -21,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
+
+    }    
+    private void FixedUpdate()
+    {
         // Lee el input WASD
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
@@ -52,10 +56,6 @@ public class PlayerMovement : MonoBehaviour
         // Moviemento
         Vector3 velocity = moveDir * moveSpeed + Vector3.up * yVelocity;
         controller.Move(velocity * Time.deltaTime);
-    }    
-    private void FixedUpdate()
-    {
-
     }
 
     // Esta funcion controla mirar con la camara

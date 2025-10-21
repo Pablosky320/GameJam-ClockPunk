@@ -5,11 +5,11 @@ using UnityEngine.Windows;
 
 public class EnemyAI : MonoBehaviour
 {
+    public NavMeshAgent agent;
+
+
     [SerializeField] bool isAlerted;
-    public GameObject player;
-    public Vector3 playerDirection;
-    Rigidbody rb;
-    float speed = 5f; 
+    
 
 
     private void Update()
@@ -29,6 +29,6 @@ public class EnemyAI : MonoBehaviour
 
     void Alerted()
     {
-        rb.MovePosition(transform.position + (transform.forward * playerDirection.magnitude) * speed * Time.deltaTime);
+        age
     }
 }
