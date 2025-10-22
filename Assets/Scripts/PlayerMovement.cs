@@ -1,20 +1,34 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float gravity = -9.81f;
+    float dashSpeed = 20f;
 
     public Transform cameraTransform;
 
     private CharacterController controller;
     private float yVelocity;
+    float h;
+    float v;
+
+    bool isDashing;
+
+    private Vector3 moveDirection;
+    private Vector3 dashDirection;
+
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
+
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
 
         if (cameraTransform == null)
             cameraTransform = GetComponent<Camera>().transform;
@@ -26,13 +40,12 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // Lee el input WASD
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+
         Vector3 inputDir = new Vector3(h, 0f, v).normalized;
 
         MouseLook();
 
-        //Determinando la posicion de la camara
+            //Determinando la posicion de la camara
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight = cameraTransform.right;
 
@@ -40,8 +53,9 @@ public class PlayerMovement : MonoBehaviour
         camRight.y = 0f;
         camForward.Normalize();
         camRight.Normalize();
-
+            
         Vector3 moveDir = (camForward * inputDir.z + camRight * inputDir.x).normalized;
+        moveDirection = moveDir * moveSpeed;
 
         /* 3. No creo que haga falta la gravedad pero ya que esta voy a dejarla por si acaso
         if (controller.isGrounded)
@@ -56,6 +70,13 @@ public class PlayerMovement : MonoBehaviour
         // Moviemento
         Vector3 velocity = moveDir * moveSpeed + Vector3.up * yVelocity;
         controller.Move(velocity * Time.deltaTime);
+            
+        if (isDashing == true)
+            {
+                StartCoroutine (dashing());
+
+
+            }
     }
 
     // Esta funcion controla mirar con la camara
@@ -75,8 +96,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Dashing()
+    IEnumerator dashing()
     {
-
+        dashDirection;
+        controller.Move(dashDirection * dashSpeed * Time.deltaTime);
+        
     }
 }
