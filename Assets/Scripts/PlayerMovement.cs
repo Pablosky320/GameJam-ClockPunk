@@ -9,43 +9,83 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 5f;
     public float gravity = -9.81f;
     float dashSpeed = 20f;
+    float dashDuration = 0.2f;
+    float dashCooldown = 0.5f;
 
     public Transform cameraTransform;
 
     private CharacterController controller;
     private float yVelocity;
+
     float h;
     float v;
 
-    bool isDashing;
+    public bool isDashing;
+    bool canDash;
 
     private Vector3 moveDirection;
     private Vector3 dashDirection;
+    private Vector3 inputDir;
 
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
 
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        isDashing = false;
+        canDash = true;
 
         if (cameraTransform == null)
             cameraTransform = GetComponent<Camera>().transform;
     }
     void Update()
-    {
-
-    }    
-    private void FixedUpdate()
-    {
+    {        
         // Lee el input WASD
 
-        Vector3 inputDir = new Vector3(h, 0f, v).normalized;
 
+        if (!isDashing)
+        {
+            Moving();
+        }
         MouseLook();
 
-            //Determinando la posicion de la camara
+        if (Input.GetKeyDown(KeyCode.Space) && canDash)
+        {
+            StartCoroutine(Dashing());
+        }
+
+        controller.Move((moveDirection + Vector3.up * yVelocity) * Time.deltaTime);
+    }
+    private void FixedUpdate()
+    {
+
+    }
+
+    // Esta funcion controla mirar con la camara
+    void MouseLook()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+
+        if (groundPlane.Raycast(ray, out float distance))
+        {
+            Vector3 point = ray.GetPoint(distance);
+            Vector3 lookDir = point - transform.position;
+            lookDir.y = 0f;
+
+            if (lookDir.sqrMagnitude > 0.01f)
+                transform.rotation = Quaternion.LookRotation(lookDir);
+        }
+    }
+
+    void Moving()
+    {
+        inputDir = new Vector3(h, 0f, v).normalized;
+
+        h = Input.GetAxisRaw("Horizontal");
+        v = Input.GetAxisRaw("Vertical");
+
+        //Determinando la posicion de la camara
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight = cameraTransform.right;
 
@@ -70,36 +110,35 @@ public class PlayerMovement : MonoBehaviour
         // Moviemento
         Vector3 velocity = moveDir * moveSpeed + Vector3.up * yVelocity;
         controller.Move(velocity * Time.deltaTime);
-            
-        if (isDashing == true)
-            {
-                StartCoroutine (dashing());
-
-
-            }
     }
 
-    // Esta funcion controla mirar con la camara
-    void MouseLook()
+    IEnumerator Dashing()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        canDash = false;
+        isDashing = true;
 
-        if (groundPlane.Raycast(ray, out float distance))
-        {
-            Vector3 point = ray.GetPoint(distance);
-            Vector3 lookDir = point - transform.position;
-            lookDir.y = 0f;
 
-            if (lookDir.sqrMagnitude > 0.01f)
-                transform.rotation = Quaternion.LookRotation(lookDir);
-        }
-    }
-
-    IEnumerator dashing()
-    {
-        dashDirection;
-        controller.Move(dashDirection * dashSpeed * Time.deltaTime);
+        // guarda la dirección en la que el personaje se mueve
+        dashDirection = moveDirection.normalized;
         
+        if (dashDirection.magnitude == 0)
+        {
+            //si esta quieto se mueve en la dirección en la que mira
+            dashDirection = transform.forward;
+        }
+
+        float elapsed = 0f;
+
+        while (elapsed < dashDuration)
+        {
+            controller.Move(dashDirection * dashSpeed * Time.deltaTime);
+            elapsed += Time.deltaTime;
+            yield return null; // espera un frame
+        }
+
+        isDashing = false;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+
     }
 }
