@@ -7,6 +7,7 @@ public class Attack : MonoBehaviour
 {
     public LayerMask enemyLayers;
     public Animator animator;
+    public Transform attackPoint;
     public float attackRange = 0.5f;
     public Enemy enemy;
 
@@ -21,15 +22,15 @@ public class Attack : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            Attack();
+            Attacking();
         }
     }
 
-    void Attack()
+    void Attacking()
     {
         animator.SetTrigger("Attack");
         
-        Collider[] hitEnemies = Physics.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
         
         foreach(Collider enemy in hitEnemies)
         {

@@ -3,7 +3,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public GameObject hitEffect;
-    
+    public Enemy enemy;
+    public LayerMask enemyLayers;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,5 +22,9 @@ public class Bullet : MonoBehaviour
         Instantiate(hitEffect, transform.position, Quaternion.identity);
         Destroy(hitEffect);
         Destroy(gameObject);
+        if (Physics.CheckSphere(transform.position, enemyLayers));
+        {
+            enemy.GetComponent<Enemy>().TakeDamage(20);
+        }
     }
 }
