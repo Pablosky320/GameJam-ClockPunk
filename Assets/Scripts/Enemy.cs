@@ -3,7 +3,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public int maxHealth = 100;
-    int currentHealth;
+    [SerializeField] int currentHealth;
     public Animator animator;
 
 
@@ -15,9 +15,9 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        animator.SetTrigger("Hurt");
+        Debug.Log("el enemigo recibe daño");
 
-        currentHealth -= damage;
+        currentHealth = currentHealth - damage;
 
         if(currentHealth <= 0)
         {
@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
     
     void Die()
     {
-        animator.SetBool("IsDead", true);
-        this.enabled = false;
+        Debug.Log("el enemigo esta muerto");
+        Destroy(gameObject);
     }
 }

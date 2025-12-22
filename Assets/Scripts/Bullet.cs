@@ -1,30 +1,26 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Bullet : MonoBehaviour
 {
     public GameObject hitEffect;
-    public Enemy enemy;
-    public LayerMask enemyLayers;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int damageDealt = 15;
 
     private void OnCollisionEnter(Collision collision)
     {
-        Instantiate(hitEffect, transform.position, Quaternion.identity);
-        Destroy(hitEffect);
+        GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
         Destroy(gameObject);
-        if (Physics.CheckSphere(transform.position, enemyLayers));
+        Destroy(effect);
+    }
+
+    void OnTriggerEnter(Collider hitInfo)
+    {
+        Enemy enemy = hitInfo.GetComponent<Enemy>();
+        if (enemy != null)
         {
-            enemy.GetComponent<Enemy>().TakeDamage(20);
+            Debug.Log("El enemigo recibe un disparo");
+            enemy.GetComponent<Enemy>().TakeDamage(damageDealt);
         }
     }
 }

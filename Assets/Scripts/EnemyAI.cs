@@ -17,23 +17,11 @@ public class EnemyAI : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         playerPosition = player.gameObject.transform;
-
-
     }
 
     private void Update()
     {
-        //esto determina la distancia entre el enemigo y el jugador
-        float distance = Vector3.Distance(transform.position, playerPosition.position);
-        if (distance > stopDistance)
-        {
-            agent.isStopped = false;
-            agent.SetDestination(playerPosition.position);
-        }
-        else
-        {
-            agent.isStopped = true; // Stop moving when close enough
-        }
+
     }
 
     private void FixedUpdate()
@@ -44,15 +32,20 @@ public class EnemyAI : MonoBehaviour
         } 
     }
 
-    private void OnTriggerEnter(Collider Jugador)
-    {
-        isAlerted = true;
-        
-    }
-
     void Chase()
     {
+        //esto determina la distancia entre el enemigo y el jugador
+        float distance = Vector3.Distance(transform.position, playerPosition.position);
         agent.SetDestination(playerPosition.position);
 
+        if (distance > stopDistance)
+        {
+            agent.isStopped = false;
+            agent.SetDestination(playerPosition.position);
+        }
+        else
+        {
+            agent.isStopped = true; // Se para cuando esta cerca
+        }
     }
 }

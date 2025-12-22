@@ -8,8 +8,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float gravity = -9.81f;
-    float dashSpeed = 20f;
-    float dashDuration = 0.2f;
+    float dashSpeed = 40f;
+    float dashDuration = 0.1f;
     float dashCooldown = 0.5f;
 
     public Transform cameraTransform;
@@ -118,12 +118,12 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
 
 
-        // guarda la dirección en la que el personaje se mueve
+        // guarda la direcciï¿½n en la que el personaje se mueve
         dashDirection = moveDirection.normalized;
         
         if (dashDirection.magnitude == 0)
         {
-            //si esta quieto se mueve en la dirección en la que mira
+            //si esta quieto se mueve en la direcciï¿½n en la que mira
             dashDirection = transform.forward;
         }
 
