@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class ActivationScript : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public EnemyAI enemyAI;
+    void Start() 
     {
-        
+        enemyAI = GetComponentInParent<EnemyAI>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerEnter(Collider other) 
     {
-        
+        if (other.tag == "Player")
+        {
+            enemyAI.isAlerted = true;
+        }
     }
 }

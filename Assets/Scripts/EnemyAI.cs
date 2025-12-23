@@ -11,7 +11,7 @@ public class EnemyAI : MonoBehaviour
     public GameObject player;
     public float stopDistance = 2f;
 
-    [SerializeField] bool isAlerted;
+    public bool isAlerted;
 
     private void Awake()
     {
