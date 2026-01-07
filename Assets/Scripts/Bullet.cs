@@ -19,7 +19,6 @@ public class Bullet : MonoBehaviour
         Enemy enemy = hitInfo.GetComponent<Enemy>();
         if (enemy != null)
         {
-            Debug.Log("El enemigo recibe un disparo");
             enemy.GetComponent<Enemy>().TakeDamage(damageDealt);
         }
     }
