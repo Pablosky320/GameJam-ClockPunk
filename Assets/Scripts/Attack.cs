@@ -31,8 +31,7 @@ public class Attack : MonoBehaviour
     {
         Debug.Log("El personaje ataca");
         
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
-        
+                
         foreach(Collider enemy in hitEnemies)
         {
             enemy.GetComponent<Enemy>().TakeDamage(damageDealt);

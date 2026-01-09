@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -28,8 +29,9 @@ public class EnemyAI : MonoBehaviour
     {
         if (isAlerted == true)
         {
-            Chase();    
-        } 
+            Chase();
+        }
+
     }
 
     void Chase()
@@ -46,6 +48,15 @@ public class EnemyAI : MonoBehaviour
         else
         {
             agent.isStopped = true; // Se para cuando esta cerca
+            StartCoroutine(Attacking);
         }
+
+
+    }
+
+    IEnumerator Attacking()
+    {
+
+        yield return new WaitForSeconds(stopDistance);
     }
 }
