@@ -297,13 +297,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 202813109}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7d109c479c181747b046007ad7525c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 824dc4268a2185545ba64b819b7b55cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnerEnemigos
-  prefabEnemigo: {fileID: 4386764199761664424, guid: 391d7292f8a8fc34f9478ba5ef708531, type: 3}
-  tiempoEntreEnemigos: 8
+  prefabEnemigo: {fileID: 7978436827710743590, guid: 88fd871eebb3de749ac92cbd7b5f0b4b, type: 3}
+  tiempoEntreEnemigos: 3
   limiteEnemigos: 4
-  radioSpawn: 13.1
+  radioSpawn: 11.25
 --- !u!1 &262879690
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +427,9 @@ GameObject:
   - component: {fileID: 575611186}
   - component: {fileID: 575611185}
   - component: {fileID: 575611184}
+  - component: {fileID: 575611192}
+  - component: {fileID: 575611191}
+  - component: {fileID: 575611190}
   - component: {fileID: 575611189}
   m_Layer: 0
   m_Name: Player
@@ -558,6 +561,54 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &575611190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575611182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e9a4cbbfd70e7640a8c1d3f21b7f60e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DisparoJugador
+  balaPrefab: {fileID: 5612891669970257319, guid: dfb21f3b534bf284eb96d091f4288803, type: 3}
+  puntaPistola: {fileID: 1092715227}
+  velocidadBala: 30
+--- !u!114 &575611191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575611182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9842ea9bfc3a8394890102bc21221160, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaludJugador
+  vidaMaxima: 100
+  vidaActual: 0
+  sliderVida: {fileID: 1395032385}
+--- !u!114 &575611192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575611182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680234b44af78c14fa147450b7975b21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  velocidad: 7
+  suavizadoRotacion: 0.2
+  fuerzaDash: 70
+  tiempoDash: 0.05
+  radioInteraccion: 2
+  teclaInteractuar: 101
 --- !u!1 &1009907522
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,7 +1007,7 @@ GameObject:
   - component: {fileID: 1652442318}
   - component: {fileID: 1652442317}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Brazo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -971,7 +1022,7 @@ Transform:
   m_GameObject: {fileID: 1652442315}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.59922874, y: -0.03473787, z: 0.4800084}
+  m_LocalPosition: {x: 0.59922874, y: -0.08, z: 0.47}
   m_LocalScale: {x: 0.1143893, y: 0.29018307, z: 1.4031507}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1175,7 +1226,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1920982344}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04fc495461c74804bb8558d2cc2cac5c, type: 3}
+  m_Script: {fileID: 11500000, guid: 907cf26bd12b7574395a1b7aaf4e0c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BotonMecanico
 --- !u!1 &2043514566

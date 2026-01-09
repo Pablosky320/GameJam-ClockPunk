@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6397503243202230120
+--- !u!1 &2829386641911611459
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3632998081495990402}
-  - component: {fileID: 3357349405696016626}
-  - component: {fileID: 8314810768954458153}
-  - component: {fileID: 2414142012744098636}
-  - component: {fileID: 6981054244718732580}
-  - component: {fileID: 759773570504912049}
-  m_Layer: 6
+  - component: {fileID: 7635505141085817549}
+  - component: {fileID: 1753268354195994006}
+  - component: {fileID: 4106111968619930212}
+  - component: {fileID: 3394134075753207557}
+  - component: {fileID: 7454780426095504580}
+  - component: {fileID: 1982981339319677647}
+  m_Layer: 3
   m_Name: Bala
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3632998081495990402
+--- !u!4 &7635505141085817549
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6397503243202230120}
+  m_GameObject: {fileID: 2829386641911611459}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.49, y: 1.68, z: -5.0376}
+  m_LocalPosition: {x: 3.53, y: 1.05054, z: -2.51}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3357349405696016626
+--- !u!33 &1753268354195994006
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6397503243202230120}
+  m_GameObject: {fileID: 2829386641911611459}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &8314810768954458153
+--- !u!23 &4106111968619930212
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6397503243202230120}
+  m_GameObject: {fileID: 2829386641911611459}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 41e317e96cc3b6f47846ca1e890733e9, type: 2}
+  - {fileID: 2100000, guid: 8a70f66f86e6e4048acf3efec9934386, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,13 +92,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2414142012744098636
+--- !u!135 &3394134075753207557
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6397503243202230120}
+  m_GameObject: {fileID: 2829386641911611459}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -111,15 +111,15 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.2
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &6981054244718732580
+--- !u!54 &7454780426095504580
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6397503243202230120}
+  m_GameObject: {fileID: 2829386641911611459}
   serializedVersion: 5
   m_Mass: 1
   m_LinearDamping: 0
@@ -140,16 +140,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &759773570504912049
+--- !u!114 &1982981339319677647
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6397503243202230120}
+  m_GameObject: {fileID: 2829386641911611459}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d7ba7958b0941b48a4c702ae89fd0dc, type: 3}
+  m_Script: {fileID: 11500000, guid: c6a6a6b8532f5424caa8c5ebcca4394b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BalaDanio
   danio: 20
