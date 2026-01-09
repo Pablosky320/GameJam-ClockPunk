@@ -48,7 +48,7 @@ public class EnemyAI : MonoBehaviour
         else
         {
             agent.isStopped = true; // Se para cuando esta cerca
-            StartCoroutine(Attacking);
+            StartCoroutine(Attacking());
         }
 
 
@@ -57,6 +57,6 @@ public class EnemyAI : MonoBehaviour
     IEnumerator Attacking()
     {
 
-        yield return new WaitForSeconds(stopDistance);
+        yield return new WaitForSeconds(2);
     }
 }

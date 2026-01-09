@@ -11,40 +11,38 @@ public class Attack : MonoBehaviour
     public float attackRange = 1f;
     public Enemy enemy;
     public int damageDealt = 20;
+    public GameObject attackHitbox;
+    public float attackCooldown;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            Attacking();
+            Debug.Log("El personaje ataca");
+            StartCoroutine(Attacking());
         }
     }
 
-    void Attacking()
-    {
-        Debug.Log("El personaje ataca");
-        
-                
-        foreach(Collider enemy in hitEnemies)
-        {
-            enemy.GetComponent<Enemy>().TakeDamage(damageDealt);
-        }
-    }
 
-    void OnDrawGizmos() 
+    void OnDrawGizmos()
     {
         if (attackPoint == null)
         {
             return;
-        }    
+        }
         Gizmos.DrawSphere(attackPoint.position, 1);
+    }
+
+    IEnumerator Attacking()
+    {
+        yield return new WaitForSeconds(2);
     }
 }
 
