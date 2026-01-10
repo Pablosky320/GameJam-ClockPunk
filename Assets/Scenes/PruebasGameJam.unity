@@ -282,7 +282,7 @@ Transform:
   m_GameObject: {fileID: 202813109}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.39, y: 0.34, z: -5.084}
+  m_LocalPosition: {x: -0.39, y: 0.3, z: -5.084}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -300,10 +300,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 824dc4268a2185545ba64b819b7b55cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnerEnemigos
-  prefabEnemigo: {fileID: 7978436827710743590, guid: 88fd871eebb3de749ac92cbd7b5f0b4b, type: 3}
-  tiempoEntreEnemigos: 3
-  limiteEnemigos: 4
-  radioSpawn: 11.25
+  prefabEnemigo: {fileID: 2368247502055054512, guid: 72340c7190630614eafc032418e8da93, type: 3}
+  tiempoEntreEnemigos: 2.5
+  limiteEnemigos: 3
+  radioSpawn: 14
 --- !u!1 &262879690
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,7 +409,7 @@ Transform:
   m_GameObject: {fileID: 262879690}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.24, y: 0, z: -4.75}
+  m_LocalPosition: {x: -1.24, y: -0.07, z: -4.75}
   m_LocalScale: {x: 50.13297, y: 0.6771722, z: 45.68229}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -526,8 +526,8 @@ Transform:
   m_GameObject: {fileID: 575611182}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.89, y: 0.99, z: -4.75136}
-  m_LocalScale: {x: 0.57574, y: 0.57574, z: 0.57574}
+  m_LocalPosition: {x: -0.94501, y: 1.69, z: -4.9876}
+  m_LocalScale: {x: 1.2790432, y: 1.2790432, z: 1.2790432}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1652442316}
@@ -940,7 +940,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -489.6, y: -265}
+  m_AnchoredPosition: {x: -441.9, y: -242.8}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1395032385
