@@ -2,22 +2,23 @@ using UnityEngine;
 
 public class BalaJugador : MonoBehaviour 
 {
-    public float danio = 10f; // El daño que le hará a la esfera
+    public float danio = 20f; // Cuánta vida quita cada bala
 
     void OnCollisionEnter(Collision collision)
     {
-        // Importante: Comprueba si lo que golpeamos tiene el Tag "Enemigo"
+        // 1. El caballo DEBE tener el Tag "Enemigo" puesto en el Inspector
         if (collision.gameObject.CompareTag("Enemigo"))
         {
-            // Buscamos el script de salud en la esfera roja
-            SaludEnemigo salud = collision.gameObject.GetComponent<SaludEnemigo>();
+            // 2. Buscamos tu script real que es GestorBarras
+            GestorBarras salud = collision.gameObject.GetComponent<GestorBarras>();
+            
             if (salud != null) 
             {
                 salud.RecibirDanio(danio);
             }
         }
         
-        // La bala se destruye al tocar cualquier cosa (suelo, paredes o enemigo)
+        // La bala desaparece al chocar
         Destroy(gameObject);
     }
 }

@@ -4,18 +4,26 @@ public class BalaDanio : MonoBehaviour
 {
     public float danio = 10f;
 
-    // Cambiado a Trigger porque es mucho más fiable para balas rápidas
     void OnTriggerEnter(Collider other)
     {
+        // 1. Comprueba si el objeto tocado es el Player
         if (other.CompareTag("Player"))
         {
-            // Usamos el script que me pasaste
-            other.GetComponent<SaludJugador>().RecibirDanio(danio);
-            Destroy(gameObject); // La bala desaparece al tocarte
+            // 2. Buscamos el script SaludJugadorCanvas en el Player
+            SaludJugadorCanvas salud = other.GetComponent<SaludJugadorCanvas>();
+            
+            if (salud != null)
+            {
+                // 3. Llamamos a la función para restar vida y actualizar el Canvas
+                salud.RecibirDanio(danio);
+            }
+            
+            // La bala desaparece al impactar al jugador
+            Destroy(gameObject);
         }
         
-        // Destruir si toca el suelo para que no se acumulen
-        if (other.CompareTag("Suelo")) 
+        // Destruir si toca el suelo o paredes para no saturar el juego
+        if (other.CompareTag("Suelo") || other.gameObject.layer == LayerMask.NameToLayer("Obstaculos")) 
         {
             Destroy(gameObject);
         }
