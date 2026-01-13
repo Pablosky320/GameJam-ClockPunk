@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -8,11 +9,9 @@ public class Attack : MonoBehaviour
     public LayerMask enemyLayers;
     public Animator animator;
     public Transform attackPoint;
-    public float attackRange = 1f;
     public Enemy enemy;
     public int damageDealt = 20;
-    public GameObject attackHitbox;
-    public float attackCooldown;
+    public float attackRange = 2f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,26 +22,20 @@ public class Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
+
+        foreach (Collider enemy in hitEnemies)
         {
-            Debug.Log("El personaje ataca");
-            StartCoroutine(Attacking());
+            enemy.GetComponent<Enemy>().TakeDamage(damageDealt);
         }
     }
 
-
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         if (attackPoint == null)
-        {
             return;
-        }
-        Gizmos.DrawSphere(attackPoint.position, 1);
-    }
 
-    IEnumerator Attacking()
-    {
-        yield return new WaitForSeconds(2);
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }
 

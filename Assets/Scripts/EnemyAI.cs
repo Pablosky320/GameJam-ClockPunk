@@ -31,7 +31,6 @@ public class EnemyAI : MonoBehaviour
         {
             Chase();
         }
-
     }
 
     void Chase()
@@ -56,7 +55,6 @@ public class EnemyAI : MonoBehaviour
 
     IEnumerator Attacking()
     {
-
         yield return new WaitForSeconds(2);
     }
 }
