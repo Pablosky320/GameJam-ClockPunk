@@ -17,8 +17,7 @@ public class TeleportPuerta : MonoBehaviour
     {
         if (other.gameObject.CompareTag ("Teleport"))
                 {
-            //transform.position = new Vector3(-16f, 4, -6f);
-            Debug.Log("funciona lampuerta");
+            transform.position = new Vector3(-26f, 4, -6f);
                 }
     }
 }

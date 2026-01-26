@@ -9,6 +9,7 @@ TagManager:
   - Suelo
   - Teleport
   - TeleportEscena
+  - Escudo
   layers:
   - Default
   - TransparentFX
