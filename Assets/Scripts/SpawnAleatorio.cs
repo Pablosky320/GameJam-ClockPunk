@@ -2,21 +2,24 @@ using UnityEngine;
 
 public class SpawnAleatorio : MonoBehaviour
 {
-    [Header("Configuración")]
-    public GameObject enemigoPrefab; // DEBE SER EL PREFAB (el de la carpeta Assets)
+    [Header("Configuración del Prefab")]
+    public GameObject enemigoPrefab; // Arrastra aquí el prefab del caballo
+
+    [Header("Ajustes de Spawn")]
     public int cantidadInicial = 3;
     public float radioSpawn = 15f; 
     public float tiempoEntreNuevos = 5f;
+    public int maxEnemigos = 10; // Límite para que no explote el PC
 
     void Start()
     {
-        // Crea los enemigos al empezar
+        // Crea los enemigos iniciales
         for (int i = 0; i < cantidadInicial; i++)
         {
             GenerarEnemigo();
         }
 
-        // Sigue creando enemigos
+        // Llama a la función repetidamente cada X segundos
         InvokeRepeating("GenerarEnemigo", tiempoEntreNuevos, tiempoEntreNuevos);
     }
 
@@ -24,14 +27,24 @@ public class SpawnAleatorio : MonoBehaviour
     {
         if (enemigoPrefab == null) return;
 
-        // Punto aleatorio
+        // Comprobamos cuántos enemigos hay en la escena para no pasarnos del límite
+        int enemigosActuales = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        if (enemigosActuales >= maxEnemigos) return;
+
+        // Calculamos punto aleatorio en el círculo
         Vector2 circulo = Random.insideUnitCircle * radioSpawn;
-        Vector3 posFinal = new Vector3(transform.position.x + circulo.x, 1f, transform.position.z + circulo.y);
+        
+        // CORRECCIÓN: Ahora usa la 'y' del objeto Empty para que no salgan en el suelo
+        Vector3 posFinal = new Vector3(
+            transform.position.x + circulo.x, 
+            transform.position.y, 
+            transform.position.z + circulo.y
+        );
 
         Instantiate(enemigoPrefab, posFinal, Quaternion.identity);
     }
 
-    // Esto dibuja el área en la ventana Scene para que la veas
+    // Dibuja el círculo azul en la ventana Scene
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
