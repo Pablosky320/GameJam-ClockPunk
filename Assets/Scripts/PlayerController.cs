@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem; 
 using System.Collections;
-using Microlight.MicroBar; // Añadido para controlar la barra
+using Microlight.MicroBar; 
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,10 +10,10 @@ public class PlayerController : MonoBehaviour
     public float suavizadoRotacion = 0.2f;
 
     [Header("Dash y Energía")]
-    public MicroBar barraDashUI;       // Arrastra aquí la barra amarilla del Canvas
+    public MicroBar barraDashUI;       
     public float energiaMaxima = 100f;
-    public float costeDash = 30f;      // Cuánto quita cada dash
-    public float velocidadRegen = 15f; // Energía por segundo
+    public float costeDash = 30f;      
+    public float velocidadRegen = 15f; 
     private float energiaActual;
     
     public float fuerzaDash = 45f;      
@@ -31,14 +31,12 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.sleepThreshold = 0.0f;
 
-        // Inicializar energía y barra
         energiaActual = energiaMaxima;
         if (barraDashUI != null) barraDashUI.Initialize(energiaMaxima);
     }
 
     void Update()
     {
-        // 1. Regeneración de Energía
         if (energiaActual < energiaMaxima)
         {
             energiaActual += velocidadRegen * Time.deltaTime;
@@ -47,7 +45,6 @@ public class PlayerController : MonoBehaviour
 
         if (estaHaciendoDash) return;
 
-        // 2. LEER INPUTS
         Vector2 input = Vector2.zero;
         if (Keyboard.current.wKey.isPressed) input.y = 1;
         if (Keyboard.current.sKey.isPressed) input.y = -1;
@@ -55,17 +52,15 @@ public class PlayerController : MonoBehaviour
         if (Keyboard.current.dKey.isPressed) input.x = 1;
 
         Vector3 movimientoRaw = new Vector3(input.x, 0, input.y).normalized;
-        direccionFinal = Quaternion.Euler(0, -132f, 0) * movimientoRaw;
+        
+        // AJUSTE CLAVE: Ahora usa -50.8f para coincidir con tu cámara
+        direccionFinal = Quaternion.Euler(0, -50.8f, 0) * movimientoRaw;
 
-        // 3. LÓGICA DEL DASH (Solo si tiene energía suficiente)
         if (Keyboard.current.spaceKey.wasPressedThisFrame && energiaActual >= costeDash)
         {
             Vector3 direccionParaDash = direccionFinal.magnitude > 0.1f ? direccionFinal : transform.forward;
-            
-            // GASTAR ENERGÍA
             energiaActual -= costeDash;
             if (barraDashUI != null) barraDashUI.UpdateBar(energiaActual);
-
             StartCoroutine(EjecutarDash(direccionParaDash));
         }
 
@@ -103,6 +98,7 @@ public class PlayerController : MonoBehaviour
         Collider[] colisiones = Physics.OverlapSphere(transform.position, radioInteraccion);
         foreach (Collider col in colisiones)
         {
+            // Asegúrate de tener la interfaz IInteractuable en tus scripts de objetos
             if (col.TryGetComponent(out IInteractuable objeto))
             {
                 objeto.Interactuar();

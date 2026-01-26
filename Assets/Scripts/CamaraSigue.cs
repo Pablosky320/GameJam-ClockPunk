@@ -2,18 +2,26 @@ using UnityEngine;
 
 public class CamaraSigue : MonoBehaviour
 {
-    public Transform jugador; // Arrastra aquí a tu Player
-    private Vector3 offset;    // La distancia que ya tienes configurada
+    public Transform objetivo; // Tu Player
+    public float suavizado = 0.125f;
+    private Vector3 desajuste; 
 
     void Start()
     {
-        // Esto guarda la distancia actual para que no se mueva el ángulo
-        offset = transform.position - jugador.position;
+        if (objetivo != null)
+        {
+            // CALCULA LA DISTANCIA ACTUAL (IMPORTANTE)
+            desajuste = transform.position - objetivo.position; 
+        }
     }
 
     void LateUpdate()
     {
-        // La cámara sigue al jugador manteniendo la distancia inicial
-        transform.position = jugador.position + offset;
+        if (objetivo != null)
+        {
+            // Mantiene esa distancia exacta siempre para que no salga volando
+            Vector3 posicionDeseada = objetivo.position + desajuste;
+            transform.position = Vector3.Lerp(transform.position, posicionDeseada, suavizado);
+        }
     }
 }
