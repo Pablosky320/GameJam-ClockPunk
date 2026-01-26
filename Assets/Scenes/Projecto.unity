@@ -827,9 +827,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: d87de3bb0b766ac48b645ad1278a50b3, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d87de3bb0b766ac48b645ad1278a50b3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 1809784e1c75e2447b96a7e970cd07bd, type: 2}
+      objectReference: {fileID: 2100000, guid: c98dfb04b190f7e468f1089afbe06e41, type: 2}
+    - target: {fileID: -7511558181221131132, guid: d87de3bb0b766ac48b645ad1278a50b3, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b57757d93ab0d4948ba73dd61f281cc1, type: 2}
+    - target: {fileID: -7511558181221131132, guid: d87de3bb0b766ac48b645ad1278a50b3, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b57757d93ab0d4948ba73dd61f281cc1, type: 2}
     - target: {fileID: 919132149155446097, guid: d87de3bb0b766ac48b645ad1278a50b3, type: 3}
       propertyPath: m_Name
       value: "se\xF1al"
