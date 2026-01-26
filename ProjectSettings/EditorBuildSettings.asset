@@ -14,6 +14,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Projecto.unity
+    guid: 427c11b602df2d74b9ddc0f6f4bf5d08
+  - enabled: 1
+    path: Assets/Scenes/PruebaCambioEscena.unity
+    guid: 4be77cc8b6a17704da7b0cc12ad47222
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
