@@ -260,6 +260,18 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8611201056070623234, guid: e4947991027610c46a25f07f62eab165, type: 3}
+      propertyPath: simpleBar._barPrimaryColor.b
+      value: 0.0032929946
+      objectReference: {fileID: 0}
+    - target: {fileID: 8611201056070623234, guid: e4947991027610c46a25f07f62eab165, type: 3}
+      propertyPath: simpleBar._barPrimaryColor.g
+      value: 0.44633716
+      objectReference: {fileID: 0}
+    - target: {fileID: 8611201056070623234, guid: e4947991027610c46a25f07f62eab165, type: 3}
+      propertyPath: simpleBar._barPrimaryColor.r
+      value: 0.6981132
+      objectReference: {fileID: 0}
+    - target: {fileID: 8611201056070623234, guid: e4947991027610c46a25f07f62eab165, type: 3}
       propertyPath: simpleBar._barAdaptiveColor.b
       value: 0.12041653
       objectReference: {fileID: 0}
@@ -435,11 +447,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 360056032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c13d63a6c878948488cfff0d18b51ade, type: 3}
+  m_Script: {fileID: 11500000, guid: fef7e4c363f4c3f428942a15065493fa, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Follow
-  player: {fileID: 1443939894}
-  offset: {x: -10, y: 15, z: -10}
+  m_EditorClassIdentifier: Assembly-CSharp::CamaraSigue
+  objetivo: {fileID: 1443939894}
+  suavizado: 4
 --- !u!224 &541679610 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1885571637023894311, guid: e4947991027610c46a25f07f62eab165, type: 3}
