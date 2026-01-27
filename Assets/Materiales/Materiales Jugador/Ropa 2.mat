@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ropa 2
-  m_Shader: {fileID: -6465566751694194690, guid: d8c02b334945c044c91d5ee14d5543a3, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 1ab93fe5e2b240a408d6fa765c3d7b71, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
