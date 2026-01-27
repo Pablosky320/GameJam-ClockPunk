@@ -10,6 +10,7 @@ TagManager:
   - Teleport
   - TeleportEscena
   - Escudo
+  - ColeccionableEscudo
   layers:
   - Default
   - TransparentFX
