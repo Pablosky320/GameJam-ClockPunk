@@ -55,16 +55,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _First_step_intensity: 1.41
+    - _First_step_intensity: 3
     - _Max: 1
     - _Min: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Second_Step_instensity: 6.07
-    - _Shade_transition: 0.27
+    - _Second_Step_instensity: 3
+    - _Shade_transition: 0.3
     - _Shades: 0.28
     m_Colors:
-    - _Color: {r: 0.7764706, g: 0.5686275, b: 0.19215687, a: 1}
+    - _Color: {r: 0.7764706, g: 0.5686274, b: 0.19215682, a: 1}
     - _Color_2: {r: 0.2811944, g: 0.8396226, b: 0.5434003, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

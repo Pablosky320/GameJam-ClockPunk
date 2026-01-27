@@ -114,7 +114,7 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _First_step_intensity: 2
+    - _First_step_intensity: 3
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -126,8 +126,8 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Second_Step_instensity: 1.34
-    - _Shade_transition: 0
+    - _Second_Step_instensity: 3
+    - _Shade_transition: 0.3
     - _Shades: 0.28
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
