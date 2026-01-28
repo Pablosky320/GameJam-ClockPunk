@@ -5,131 +5,149 @@ using Microlight.MicroBar;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Referencias")]
+    public MicroBar barraDashUI; 
+    public Transform miCamara; 
+    public GameObject balaPrefab;
+    public Transform puntaPistola;
+
+    [Header("Ajustes Cámara")]
+    public Vector3 offsetCamara = new Vector3(0, 10, -10);
+    public float suavizadoCamara = 10f; 
+
     [Header("Movimiento")]
     public float velocidad = 7f;
-    public float suavizadoRotacion = 0.2f;
+    public float suavizadoRotacion = 20f; 
 
     [Header("Dash y Energía")]
-    public MicroBar barraDashUI;       
     public float energiaMaxima = 100f;
     public float costeDash = 30f;      
     public float velocidadRegen = 15f; 
     private float energiaActual;
-    
     public float fuerzaDash = 45f;      
     public float tiempoDash = 0.12f;    
+    
     private bool estaHaciendoDash = false;
-
-    [Header("Interacción")]
-    public float radioInteraccion = 2.5f;
+    private bool estaMuerto = false; 
 
     private Rigidbody rb;
-    private Animator anim; // <-- NUEVO: Referencia al Animator
+    private Animator anim;
     private Vector3 direccionFinal;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>(); // <-- NUEVO: Obtenemos el Animator
-        rb.sleepThreshold = 0.0f;
+        anim = GetComponent<Animator>();
+        
+        // FISICA: Esto es lo que quita la vibración junto con la cámara
+        rb.interpolation = RigidbodyInterpolation.Interpolate; 
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
         energiaActual = energiaMaxima;
         if (barraDashUI != null) barraDashUI.Initialize(energiaMaxima);
+        if (miCamara == null) miCamara = Camera.main.transform;
     }
 
     void Update()
+    {
+        if (estaMuerto) return;
+
+        ControlarEnergia();
+
+        if (estaHaciendoDash) return;
+
+        // Movimiento
+        float h = (Keyboard.current.dKey.isPressed ? 1 : 0) - (Keyboard.current.aKey.isPressed ? 1 : 0);
+        float v = (Keyboard.current.wKey.isPressed ? 1 : 0) - (Keyboard.current.sKey.isPressed ? 1 : 0);
+        
+        Vector3 input = new Vector3(h, 0, v).normalized;
+        direccionFinal = Quaternion.Euler(0, -50.8f, 0) * input;
+
+        anim.SetFloat("Velocidad", input.magnitude);
+
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            MirarAlRaton();
+            anim.SetTrigger("Disparar");
+            Disparar();
+        }
+
+        if (Keyboard.current.spaceKey.wasPressedThisFrame && energiaActual >= costeDash)
+        {
+            StartCoroutine(EjecutarDash(direccionFinal.magnitude > 0.1f ? direccionFinal : transform.forward));
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (estaMuerto || estaHaciendoDash) return;
+
+        if (direccionFinal.magnitude > 0.1f)
+        {
+            rb.linearVelocity = new Vector3(direccionFinal.x * velocidad, rb.linearVelocity.y, direccionFinal.z * velocidad);
+            Quaternion rotacionObjetivo = Quaternion.LookRotation(direccionFinal);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotacionObjetivo, suavizadoRotacion * Time.fixedDeltaTime);
+        }
+        else
+        {
+            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+        }
+
+        // CÁMARA: Moverla aquí evita que vibre al caminar
+        if (miCamara != null)
+        {
+            Vector3 posicionDeseada = transform.position + offsetCamara;
+            miCamara.position = Vector3.Lerp(miCamara.position, posicionDeseada, suavizadoCamara * Time.fixedDeltaTime);
+        }
+    }
+
+    // FUNCIÓN DE MUERTE: La llama el script de salud
+    public void ActivarMuerte()
+    {
+        if (estaMuerto) return;
+        estaMuerto = true;
+        anim.SetTrigger("Muerte"); // Asegúrate de que el Trigger se llame Muerte en el Animator
+        rb.linearVelocity = Vector3.zero;
+        this.enabled = false; 
+    }
+
+    void MirarAlRaton()
+    {
+        Ray rayo = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (Physics.Raycast(rayo, out RaycastHit golpe))
+        {
+            Vector3 punto = golpe.point;
+            punto.y = transform.position.y;
+            transform.LookAt(punto);
+        }
+    }
+
+    void Disparar()
+    {
+        if (puntaPistola != null && balaPrefab != null)
+        {
+            GameObject nuevaBala = Instantiate(balaPrefab, puntaPistola.position, transform.rotation);
+            Rigidbody rbBala = nuevaBala.GetComponent<Rigidbody>();
+            if (rbBala != null) rbBala.linearVelocity = transform.forward * 30f;
+        }
+    }
+
+    void ControlarEnergia()
     {
         if (energiaActual < energiaMaxima)
         {
             energiaActual += velocidadRegen * Time.deltaTime;
             if (barraDashUI != null) barraDashUI.UpdateBar(energiaActual);
         }
-
-        if (estaHaciendoDash) return;
-
-        // LÓGICA DE MOVIMIENTO
-        Vector2 input = Vector2.zero;
-        if (Keyboard.current.wKey.isPressed) input.y = 1;
-        if (Keyboard.current.sKey.isPressed) input.y = -1;
-        if (Keyboard.current.aKey.isPressed) input.x = -1;
-        if (Keyboard.current.dKey.isPressed) input.x = 1;
-
-        Vector3 movimientoRaw = new Vector3(input.x, 0, input.y).normalized;
-        direccionFinal = Quaternion.Euler(0, -50.8f, 0) * movimientoRaw;
-
-        // --- NUEVO: ANIMACIÓN DE MOVIMIENTO ---
-        // Mandamos la magnitud (0 si está quieto, 1 si se mueve) al parámetro "Velocidad"
-        anim.SetFloat("Velocidad", movimientoRaw.magnitude);
-
-        // --- NUEVO: ANIMACIÓN DE DISPARO ---
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            anim.SetTrigger("Disparar");
-        }
-
-        // DASH
-        if (Keyboard.current.spaceKey.wasPressedThisFrame && energiaActual >= costeDash)
-        {
-            Vector3 direccionParaDash = direccionFinal.magnitude > 0.1f ? direccionFinal : transform.forward;
-            energiaActual -= costeDash;
-            if (barraDashUI != null) barraDashUI.UpdateBar(energiaActual);
-            StartCoroutine(EjecutarDash(direccionParaDash));
-        }
-
-        if (Keyboard.current.eKey.wasPressedThisFrame) RevisarInteraccion();
-
-        // TEST DE MUERTE (Para que pruebes si las flechas funcionan)
-        if (Keyboard.current.kKey.wasPressedThisFrame) Morir();
-    }
-
-    void FixedUpdate()
-    {
-        if (estaHaciendoDash) return;
-
-        if (direccionFinal.magnitude > 0.1f)
-        {
-            rb.linearVelocity = direccionFinal * velocidad;
-            Quaternion rotacionObjetivo = Quaternion.LookRotation(direccionFinal);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotacionObjetivo, suavizadoRotacion);
-        }
-        else
-        {
-            rb.linearVelocity = Vector3.zero;
-        }
-    }
-
-    // --- NUEVO: FUNCIONES DE ESTADO ---
-    public void Morir()
-    {
-        anim.SetTrigger("Muerte");
-        this.enabled = false; // Desactiva el script para que no se mueva más
-    }
-
-    public void Victoria()
-    {
-        anim.SetTrigger("Victoria");
     }
 
     IEnumerator EjecutarDash(Vector3 direccion)
     {
         estaHaciendoDash = true;
-        transform.rotation = Quaternion.LookRotation(direccion);
+        energiaActual -= costeDash;
+        if (barraDashUI != null) barraDashUI.UpdateBar(energiaActual);
         rb.linearVelocity = direccion * fuerzaDash;
         yield return new WaitForSeconds(tiempoDash);
-        rb.linearVelocity = Vector3.zero;
         estaHaciendoDash = false;
-    }
-
-    void RevisarInteraccion()
-    {
-        Collider[] colisiones = Physics.OverlapSphere(transform.position, radioInteraccion);
-        foreach (Collider col in colisiones)
-        {
-            if (col.TryGetComponent(out IInteractuable objeto))
-            {
-                objeto.Interactuar();
-                break; 
-            }
-        }
     }
 }
