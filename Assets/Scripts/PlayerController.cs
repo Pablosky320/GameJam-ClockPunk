@@ -24,11 +24,13 @@ public class PlayerController : MonoBehaviour
     public float radioInteraccion = 2.5f;
 
     private Rigidbody rb;
+    private Animator anim; // <-- NUEVO: Referencia al Animator
     private Vector3 direccionFinal;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>(); // <-- NUEVO: Obtenemos el Animator
         rb.sleepThreshold = 0.0f;
 
         energiaActual = energiaMaxima;
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
         if (estaHaciendoDash) return;
 
+        // LÓGICA DE MOVIMIENTO
         Vector2 input = Vector2.zero;
         if (Keyboard.current.wKey.isPressed) input.y = 1;
         if (Keyboard.current.sKey.isPressed) input.y = -1;
@@ -52,10 +55,19 @@ public class PlayerController : MonoBehaviour
         if (Keyboard.current.dKey.isPressed) input.x = 1;
 
         Vector3 movimientoRaw = new Vector3(input.x, 0, input.y).normalized;
-        
-        // AJUSTE CLAVE: Ahora usa -50.8f para coincidir con tu cámara
         direccionFinal = Quaternion.Euler(0, -50.8f, 0) * movimientoRaw;
 
+        // --- NUEVO: ANIMACIÓN DE MOVIMIENTO ---
+        // Mandamos la magnitud (0 si está quieto, 1 si se mueve) al parámetro "Velocidad"
+        anim.SetFloat("Velocidad", movimientoRaw.magnitude);
+
+        // --- NUEVO: ANIMACIÓN DE DISPARO ---
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            anim.SetTrigger("Disparar");
+        }
+
+        // DASH
         if (Keyboard.current.spaceKey.wasPressedThisFrame && energiaActual >= costeDash)
         {
             Vector3 direccionParaDash = direccionFinal.magnitude > 0.1f ? direccionFinal : transform.forward;
@@ -65,6 +77,9 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Keyboard.current.eKey.wasPressedThisFrame) RevisarInteraccion();
+
+        // TEST DE MUERTE (Para que pruebes si las flechas funcionan)
+        if (Keyboard.current.kKey.wasPressedThisFrame) Morir();
     }
 
     void FixedUpdate()
@@ -83,6 +98,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // --- NUEVO: FUNCIONES DE ESTADO ---
+    public void Morir()
+    {
+        anim.SetTrigger("Muerte");
+        this.enabled = false; // Desactiva el script para que no se mueva más
+    }
+
+    public void Victoria()
+    {
+        anim.SetTrigger("Victoria");
+    }
+
     IEnumerator EjecutarDash(Vector3 direccion)
     {
         estaHaciendoDash = true;
@@ -98,7 +125,6 @@ public class PlayerController : MonoBehaviour
         Collider[] colisiones = Physics.OverlapSphere(transform.position, radioInteraccion);
         foreach (Collider col in colisiones)
         {
-            // Asegúrate de tener la interfaz IInteractuable en tus scripts de objetos
             if (col.TryGetComponent(out IInteractuable objeto))
             {
                 objeto.Interactuar();
