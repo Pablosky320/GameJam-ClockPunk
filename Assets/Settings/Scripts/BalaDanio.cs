@@ -1,8 +1,10 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class BalaDanio : MonoBehaviour 
 {
-    public float danio = 10f;
+    private float danio = 20f;
 
     void OnTriggerEnter(Collider other)
     {
