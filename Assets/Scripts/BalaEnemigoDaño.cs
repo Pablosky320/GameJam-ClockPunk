@@ -6,12 +6,13 @@ public class BalaEnemigoDaño : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        // IMPORTANTE: El objeto del Gato debe tener el Tag "Player"
         if (other.CompareTag("Player"))
         {
-            SaludJugadorCanvas salud = other.GetComponent<SaludJugadorCanvas>();
-            if (salud != null)
+            PlayerController jugador = other.GetComponent<PlayerController>();
+            if (jugador != null)
             {
-                salud.RecibirDanio(danio);
+                jugador.RecibirDanio(danio);
             }
             Destroy(gameObject);
         }
