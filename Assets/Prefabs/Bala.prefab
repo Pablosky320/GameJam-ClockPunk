@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4106111968619930212}
   - component: {fileID: 3394134075753207557}
   - component: {fileID: 7454780426095504580}
-  - component: {fileID: 1982981339319677647}
+  - component: {fileID: 2284339720840590683}
   m_Layer: 3
   m_Name: Bala
   m_TagString: Untagged
@@ -140,7 +140,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1982981339319677647
+--- !u!114 &2284339720840590683
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2829386641911611459}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6a6a6b8532f5424caa8c5ebcca4394b, type: 3}
+  m_Script: {fileID: 11500000, guid: 21d1a3e24936e1a43911381db59ebb4b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BalaDanio
+  m_EditorClassIdentifier: "Assembly-CSharp::BalaEnemigoDa\xF1o"
   danio: 20

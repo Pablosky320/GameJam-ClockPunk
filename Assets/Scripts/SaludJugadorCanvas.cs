@@ -1,50 +1,50 @@
 using UnityEngine;
 using Microlight.MicroBar;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class SaludJugadorCanvas : MonoBehaviour
 {
-    public MicroBar barraUI; 
+    public MicroBar barraVidaUI; 
     public float vidaMaxima = 100f;
     private float vidaActual;
-
-    [Header("Configuración Respawn")]
-    public Vector3 puntoRespawn; // La posición inicial del jugador
+    private bool estaMuerto = false;
 
     void Start()
     {
         vidaActual = vidaMaxima;
-        // Guardamos la posición donde empieza el juego como punto de respawn
-        puntoRespawn = transform.position;
-        
-        if (barraUI != null) barraUI.Initialize(vidaMaxima);
+        if (barraVidaUI != null) barraVidaUI.Initialize(vidaMaxima);
     }
 
     public void RecibirDanio(float cantidad)
     {
+        if (estaMuerto) return; // Si ya está muerto, no recibe más daño
+
         vidaActual -= cantidad;
-        if (barraUI != null) barraUI.UpdateBar(vidaActual);
+        if (barraVidaUI != null) barraVidaUI.UpdateBar(vidaActual);
 
         if (vidaActual <= 0) 
         {
-            Respawn();
+            StartCoroutine(SecuenciaMuerte());
         }
     }
 
-    void Respawn()
+    IEnumerator SecuenciaMuerte()
     {
-        Debug.Log("RESPAWN: El jugador ha vuelto al inicio");
+        estaMuerto = true;
         
-        // 1. Resetear la vida al máximo
-        vidaActual = vidaMaxima;
-        
-        // 2. Actualizar la barra del Canvas para que vuelva a estar llena
-        if (barraUI != null) barraUI.UpdateBar(vidaMaxima);
+        // 1. Activar animación de muerte
+        Animator anim = GetComponent<Animator>();
+        if (anim != null) anim.SetTrigger("Muerte");
 
-        // 3. Mover al jugador al punto de inicio
-        transform.position = puntoRespawn;
+        // 2. Desactivar el control del jugador (Dash y Movimiento)
+        PlayerController controller = GetComponent<PlayerController>();
+        if (controller != null) controller.enabled = false;
 
-        // Opcional: Si usas físicas (Rigidbody), es bueno resetear la velocidad
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null) rb.linearVelocity = Vector3.zero;
+        // 3. Esperar 2 segundos para que se vea al gato morir
+        yield return new WaitForSeconds(2f);
+
+        // 4. Reiniciar el nivel
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

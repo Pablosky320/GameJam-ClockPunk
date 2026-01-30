@@ -7,62 +7,57 @@ public class LogicaEnemigoInfinita : MonoBehaviour
     public GameObject balaPrefab;
     public Transform puntaPistola;
 
-    [Header("Configuración de Tiempos (Frames 24 FPS)")]
-    // Frame 48 / 24 fps = 2.0s
-    public float tiempoEntreDisparos = 2.0f; 
-    // Frames 144 a 170 son 26 frames / 24 fps = 1.08s
+    [Header("Configuración")]
     public float tiempoDeRecarga = 1.08f;    
     public float velocidadBala = 25f;
 
     private Animator anim;
     private Transform jugador;
+    private bool jugadorMuerto = false;
 
     void Start()
     {
         anim = GetComponent<Animator>();
         
-        // Buscar al jugador para apuntar
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null) jugador = player.transform;
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null) jugador = playerObj.transform;
 
-        // Iniciar el bucle infinito
         StartCoroutine(CicloDeAtaque());
     }
 
     void Update()
     {
-        // Rotación suave hacia el jugador
-        if (jugador != null)
+        // Si el jugador no existe o está muerto, el enemigo no hace nada
+        if (jugador == null || jugadorMuerto) return;
+
+        // Rotación hacia el jugador
+        Vector3 direccion = (jugador.position - transform.position).normalized;
+        direccion.y = 0; 
+        if (direccion != Vector3.zero)
         {
-            Vector3 direccion = (jugador.position - transform.position).normalized;
-            direccion.y = 0; 
             transform.rotation = Quaternion.LookRotation(direccion);
         }
     }
 
     IEnumerator CicloDeAtaque()
     {
-        while (true)
+        while (!jugadorMuerto)
         {
-            // FASE DE DISPARO: 3 VECES (Frames 0 a 144)
+            // FASE DE DISPARO: 3 VECES
             for (int i = 0; i < 3; i++)
             {
-                // Usamos Play para asegurar que la animación empiece de cero cada vez
+                // Asegúrate de que tu animación en el Animator se llame exactamente "Disparo"
                 anim.Play("Disparo", -1, 0f);
                 
-                // Frame 24: Es cuando el personaje dispara en tu video (1 segundo justo)
-                yield return new WaitForSeconds(1.0f); 
+                yield return new WaitForSeconds(1.0f); // Tiempo hasta que sale la bala
                 
                 InstanciarBala();
                 
-                // Esperamos hasta el frame 48 para que termine de bajar el arma (1 segundo más)
-                yield return new WaitForSeconds(1.0f); 
+                yield return new WaitForSeconds(1.0f); // Tiempo para bajar el arma
             }
 
-            // FASE DE RECARGA: 1 VEZ (Frames 144 a 170)
+            // FASE DE RECARGA
             anim.Play("Recarga", -1, 0f);
-            
-            // Esperamos el tiempo de la recarga antes de volver a empezar el bucle
             yield return new WaitForSeconds(tiempoDeRecarga);
         }
     }
@@ -72,10 +67,19 @@ public class LogicaEnemigoInfinita : MonoBehaviour
         if (balaPrefab != null && puntaPistola != null)
         {
             GameObject b = Instantiate(balaPrefab, puntaPistola.position, puntaPistola.rotation);
-            if (b.TryGetComponent(out Rigidbody rb)) 
-            {
-                rb.linearVelocity = puntaPistola.forward * velocidadBala;
+            Rigidbody rbBala = b.GetComponent<Rigidbody>();
+            if (rbBala != null) rbBala.linearVelocity = puntaPistola.forward * velocidadBala;
+            
+            // Le metemos el script de daño a la bala si no lo tiene
+            if (!b.GetComponent<BalaEnemigoDaño>()) {
+                b.AddComponent<BalaEnemigoDaño>();
             }
         }
+    }
+
+    // Función para que el Player le diga al enemigo que pare
+    public void PararAtaque() {
+        jugadorMuerto = true;
+        StopAllCoroutines();
     }
 }
