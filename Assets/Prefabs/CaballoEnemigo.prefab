@@ -1055,7 +1055,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LogicaEnemigoInfinita
   balaPrefab: {fileID: 2829386641911611459, guid: 29cc4be30f141eb4ba8a0fea401e285f, type: 3}
   puntaPistola: {fileID: 7294467155633113484}
-  tiempoEntreDisparos: 2
   tiempoDeRecarga: 1.08
   velocidadBala: 25
 --- !u!114 &1714732884489201839
