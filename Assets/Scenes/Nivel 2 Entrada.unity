@@ -5287,15 +5287,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2652263013792949492, guid: 87d271b63fa37884cb698201fc7e0e19, type: 3}
       propertyPath: offsetCamara.x
-      value: 9.32
+      value: 6.23
       objectReference: {fileID: 0}
     - target: {fileID: 2652263013792949492, guid: 87d271b63fa37884cb698201fc7e0e19, type: 3}
       propertyPath: offsetCamara.y
-      value: 64.1
+      value: 53.1
       objectReference: {fileID: 0}
     - target: {fileID: 2652263013792949492, guid: 87d271b63fa37884cb698201fc7e0e19, type: 3}
       propertyPath: offsetCamara.z
-      value: -3.61
+      value: -18.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 2652263013792949492, guid: 87d271b63fa37884cb698201fc7e0e19, type: 3}
+      propertyPath: suavizadoCamara
+      value: 8.03
       objectReference: {fileID: 0}
     - target: {fileID: 4964809702264476825, guid: 87d271b63fa37884cb698201fc7e0e19, type: 3}
       propertyPath: m_Constraints
