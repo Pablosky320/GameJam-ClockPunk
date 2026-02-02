@@ -15,6 +15,21 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/Nivel 1 calles.unity
+    guid: dbac159a40ca7a74887080f89ca90c72
+  - enabled: 1
+    path: Assets/Scenes/Nivel 2 Entrada.unity
+    guid: 0b547a97c0054d14b9e8f0fb614c4bd8
+  - enabled: 1
+    path: Assets/Scenes/sala 2 laboratorio.unity
+    guid: f274aea34fd3ac94cb362d1eebaf6d6d
+  - enabled: 1
+    path: Assets/Scenes/sala laboratorio 1.unity
+    guid: 8dc763db74d9b4649ad575abc1013e5f
+  - enabled: 1
+    path: Assets/Scenes/Zona boss.unity
+    guid: 28014806a9aecd14ea4c51f22daf70e1
+  - enabled: 1
     path: Assets/Scenes/Mapa.unity
     guid: d0f53236f146f6246b547e022cce4ce0
   m_configObjects:
